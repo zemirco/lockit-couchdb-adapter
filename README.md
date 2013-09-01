@@ -14,7 +14,7 @@ To initialize the necessary views in your CouchDB run `node ./init.js`.
 
 ## What's included?
 
-### 1. Create a new user
+### 1. Create user
 
 `adapter.create(name, email, pass, callback)`
 
@@ -53,7 +53,7 @@ adapter.create('john', 'john@email.com', 'password123', function(err, user) {
 });
 ```
 
-### 2. Find an existing user
+### 2. Find user
 
 `adapter.find(match, query, callback)`
 
@@ -79,7 +79,7 @@ adapter.find('username', 'john', function(err, user) {
 });
 ```
 
-### 3. Update an existing user
+### 3. Update user
 
 `adapter.update(user, callback)`
 
@@ -103,13 +103,13 @@ adapter.find('username', 'john', function(err, user) {
 });
 ```
 
-### 4. Delete an existing user
+### 4. Delete user
 
 `adapter.delete(match, query, callback)`
 
-`match`: String - one of the following: 'username', 'email' or 'signupToken'
-`query`: String - corresponds to `match`, i.e. `john@email.com`
-`callback`: Function - `callback(err, res)` - `res` is `true` if everything went fine
+ - `match`: String - one of the following: 'username', 'email' or 'signupToken'
+ - `query`: String - corresponds to `match`, i.e. `john@email.com`
+ - `callback`: Function - `callback(err, res)` - `res` is `true` if everything went fine
 
 ## Test
 
