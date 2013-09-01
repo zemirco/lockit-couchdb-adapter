@@ -69,7 +69,7 @@ Example user object:
 `user`: `Object` - must have `_id` and `_rev` properties
 `callback`: `Function` - `callback(err, user)` - `user` is the updated user object
 
-#### 4. Delete an existing user
+### 4. Delete an existing user
 
 `adapter.delete(match, query, callback)`
 
