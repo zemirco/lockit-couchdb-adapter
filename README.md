@@ -18,10 +18,10 @@ To initialize the necessary views in your CouchDB run `node ./init.js`.
 
 `adapter.create(name, email, pass, callback)`
 
- - `name`: `String` - i.e. `john`
- - `email`: `String` - i.e. `john@email.com`
- - `pass`: `String` - i.e. `password123`
- - `callback`: `Function` - `callback(err, user)` where `user` is the new user now in our database.
+ - `name`: *String* - i.e. 'john'
+ - `email`: *String* - i.e. 'john@email.com'
+ - `pass`: *String* - i.e. 'password123'
+ - `callback`: *Function* - `callback(err, user)` where `user` is the new user now in our database.
 
 The `user` object has the following properties
 
@@ -32,7 +32,7 @@ The `user` object has the following properties
  - `salt`: random salt built with `crypto.randomBytes`
  - `signupTimestamp`: Date object to remember when the user signed up
  - `signupToken`: unique token sent to user's email for email verification
- - `signupTokenExpires`: Date object usually one day ahead of `signupTimestamp`
+ - `signupTokenExpires`: Date object usually 24h ahead of `signupTimestamp`
  - `username`: username chosen during sign up
 
 Example:
