@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - "0.10"
+services: couchdb
+before_script:
+  - curl -X PUT localhost:5984/test
+  - node ./init.js

@@ -1,0 +1,21 @@
+{
+  "name": "lockit-couchdb-adapter",
+  "version": "0.0.1",
+  "description": "couchdb adapter for lockit",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "author": "Mirco Zeiss <mirco.zeiss@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "nano": "~4.1.1",
+    "pwd": "git://github.com/jlubawy/node-pwd.git",
+    "node-uuid": "~1.4.1"
+  },
+  "devDependencies": {
+    "should": "~1.2.2",
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.4"
+  }
+}
