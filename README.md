@@ -1,4 +1,4 @@
-# Keyhole CouchDB adapter for lockit
+# CouchDB adapter for lockit
 
 work in progress - come back later
 
@@ -18,10 +18,10 @@ To initialize the necessary views in your CouchDB run `node ./init.js`.
 
 `adapter.create(name, email, pass, callback)`
 
- - `name`: *String* - i.e. 'john'
- - `email`: *String* - i.e. 'john@email.com'
- - `pass`: *String* - i.e. 'password123'
- - `callback`: *Function* - `callback(err, user)` where `user` is the new user now in our database.
+ - `name`: String - i.e. 'john'
+ - `email`: String - i.e. 'john@email.com'
+ - `pass`: String - i.e. 'password123'
+ - `callback`: Function - `callback(err, user)` where `user` is the new user now in our database.
 
 The `user` object has the following properties
 
@@ -34,8 +34,6 @@ The `user` object has the following properties
  - `signupToken`: unique token sent to user's email for email verification
  - `signupTokenExpires`: Date object usually 24h ahead of `signupTimestamp`
  - `username`: username chosen during sign up
-
-Example:
 
 ```js
 adapter.create('john', 'john@email.com', 'password123', function(err, user) {
@@ -52,31 +50,66 @@ adapter.create('john', 'john@email.com', 'password123', function(err, user) {
   //   signupTokenExpires: 2013-09-02T11:23:29.780Z,
   //   username: john
   // }
-})
+});
 ```
 
 ### 2. Find an existing user
 
 `adapter.find(match, query, callback)`
 
-`match`: `String` - one of the following: 'username', 'email' or 'signupToken'
-`query`: `String` - corresponds to `match`, for example `john@email.com`
-`callback`:  `Function` - `callback(err, user)`
+ - `match`: String - one of the following: 'username', 'email' or 'signupToken'
+ - `query`: String - corresponds to `match`, i.e. 'john@email.com'
+ - `callback`:  Function - `callback(err, user)`
+ 
+```js
+adapter.find('username', 'john', function(err, user) {
+  if (err) console.log(err);
+  console.log(user);
+  // {
+  //   _id: 6c656ff4bc96e9be5421dc31b3f39857,
+  //   _rev: 1-0f2898bf278f3ce07947344100dc48e2,
+  //   email: john@email.com,
+  //   hash: hETVkwFgzVrrLZ.....j4UywW6Vs9eJQNokD+....+wV7yE8oda1CE4HnaPRSf..., 
+  //   salt: qG+9aYSy7/2JehVZ9u...IOgJ7l0avHnoYLnYeKq77Rs...k4uj...4EzBvDYCa...,
+  //   signupTimestamp: 2013-09-01T11:23:29.781Z,
+  //   signupToken: 2f70719f-579f-4c47-b307-2d544e6336f9,
+  //   signupTokenExpires: 2013-09-02T11:23:29.780Z,
+  //   username: john
+  // }
+});
+```
 
 ### 3. Update an existing user
 
 `adapter.update(user, callback)`
 
-`user`: `Object` - must have `_id` and `_rev` properties
-`callback`: `Function` - `callback(err, user)` - `user` is the updated user object
+ - `user`: Object - must have `_id` and `_rev` properties
+ - `callback`: Function - `callback(err, user)` - `user` is the updated user object
+ 
+```js
+// get a user from db first
+adapter.find('username', 'john', function(err, user) {
+  if (err) console.log(err);
+  
+  // add some new properties to our existing user
+  user.newKey = 'and some value';
+  user.hasBeenUpdated = true;
+  
+  // save updated user to db
+  adapter.update(user, function(err, user) {
+    if (err) console.log(err);
+    // ...
+  });
+});
+```
 
 ### 4. Delete an existing user
 
 `adapter.delete(match, query, callback)`
 
-`match`: `String` - one of the following: 'username', 'email' or 'signupToken'
-`query`: `String` - corresponds to `match`, for example `john@email.com`
-`callback`:  `Function` - `callback(err, res)` - `res` is `true` if everything went fine
+`match`: String - one of the following: 'username', 'email' or 'signupToken'
+`query`: String - corresponds to `match`, i.e. `john@email.com`
+`callback`: Function - `callback(err, res)` - `res` is `true` if everything went fine
 
 ## Test
 
