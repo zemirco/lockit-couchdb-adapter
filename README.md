@@ -1,5 +1,7 @@
 # CouchDB adapter for lockit
 
+[![Build Status](https://travis-ci.org/zeMirco/lockit-couchdb-adapter.png)](https://travis-ci.org/zeMirco/lockit-couchdb-adapter)
+
 work in progress - come back later
 
 ## Installation
@@ -110,6 +112,14 @@ adapter.find('username', 'john', function(err, user) {
  - `match`: String - one of the following: 'username', 'email' or 'signupToken'
  - `query`: String - corresponds to `match`, i.e. `john@email.com`
  - `callback`: Function - `callback(err, res)` - `res` is `true` if everything went fine
+ 
+```js
+adapter.delete('username', 'john', function(err, res) {
+  if (err) console.log(err);
+  console.log(res);
+  // true
+});
+```
 
 ## Test
 
