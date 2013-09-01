@@ -44,7 +44,7 @@ adapter.create('john', 'john@email.com', 'password123', function(err, user) {
   // {
   //   _id: 6c656ff4bc96e9be5421dc31b3f39857,
   //   _rev: 1-0f2898bf278f3ce07947344100dc48e2,
-  //   email: john.wayne@gmail.com,
+  //   email: john@email.com,
   //   hash: hETVkwFgzVrrLZ.....j4UywW6Vs9eJQNokD+....+wV7yE8oda1CE4HnaPRSf..., 
   //   salt: qG+9aYSy7/2JehVZ9u...IOgJ7l0avHnoYLnYeKq77Rs...k4uj...4EzBvDYCa...,
   //   signupTimestamp: 2013-09-01T11:23:29.781Z,
