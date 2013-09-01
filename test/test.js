@@ -3,7 +3,8 @@ var config = require('../config.dev.js');
 var should = require('should');
 
 var db = require('nano')({
-  url: 'https://' + config.dbUser + ':' + config.dbPass + '@' + config.dbUrl + '',
+//  url: 'https://' + config.dbUser + ':' + config.dbPass + '@' + config.dbUrl + '',
+  url: 'https://' + config.dbUrl,
   request_defaults: config.request_defaults
 });
 
