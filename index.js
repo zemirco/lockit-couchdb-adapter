@@ -5,8 +5,8 @@ var uuid = require('node-uuid');
 
 var db = require('nano')({
 //  url: 'https://' + config.dbUser + ':' + config.dbPass + '@' + config.dbUrl + '',
-  url: 'https://' + config.dbUrl,
-  request_defaults: config.request_defaults
+  url: config.dbUrl
+//  request_defaults: config.request_defaults
 });
 
 // also return signupToken

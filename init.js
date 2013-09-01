@@ -4,8 +4,8 @@ var config = require('./config.dev.js');
 // create couchdb templates
 var db = require('nano')({
 //  url: 'https://' + config.dbUser + ':' + config.dbPass + '@' + config.dbUrl + '',
-  url: 'https://' + config.dbUrl,
-  request_defaults: config.request_defaults
+  url: config.dbUrl
+//  request_defaults: config.request_defaults
 });
 
 // couchdb views we need to make the app work
