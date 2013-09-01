@@ -18,6 +18,6 @@ exports.emailSettings = {
 exports.emailFrom = 'myapp@domain.com';
 
 // database settings
-exports.dbUrl = '127.0.0.1:5984/test';
+exports.dbUrl = 'http://127.0.0.1:5984/test';
 exports.dbUser = '';
 exports.dbPass = '';
