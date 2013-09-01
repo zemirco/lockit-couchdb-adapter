@@ -33,22 +33,26 @@ The `user` object has the following properties
  - `signupTimestamp`: Date object to remember when the user signed up
  - `signupToken`: unique token sent to user's email for email verification
  - `signupTokenExpires`: Date object usually one day ahead of `signupTimestamp`
-  - `username`: username chosen during sign up
+ - `username`: username chosen during sign up
 
-Example user object:
+Example:
 
 ```js
-{
-  _id: 6c656ff4bc96e9be5421dc31b3f39857,
-  _rev: 1-0f2898bf278f3ce07947344100dc48e2,
-  email: john.wayne@gmail.com,
-  hash: hETVkwFgzVrrLZ.....j4UywW6Vs9eJQNokD+....+wV7yE8oda1CE4HnaPRSf..., 
-  salt: qG+9aYSy7/2JehVZ9u...IOgJ7l0avHnoYLnYeKq77Rs...k4uj...4EzBvDYCa...,
-  signupTimestamp: 2013-09-01T11:23:29.781Z,
-  signupToken: 2f70719f-579f-4c47-b307-2d544e6336f9,
-  signupTokenExpires: 2013-09-02T11:23:29.780Z,
-  username: john
-}
+adapter.create('john', 'john@email.com', 'password123', function(err, user) {
+  if (err) console.log(err);
+  console.log(user);
+  // {
+  //   _id: 6c656ff4bc96e9be5421dc31b3f39857,
+  //   _rev: 1-0f2898bf278f3ce07947344100dc48e2,
+  //   email: john.wayne@gmail.com,
+  //   hash: hETVkwFgzVrrLZ.....j4UywW6Vs9eJQNokD+....+wV7yE8oda1CE4HnaPRSf..., 
+  //   salt: qG+9aYSy7/2JehVZ9u...IOgJ7l0avHnoYLnYeKq77Rs...k4uj...4EzBvDYCa...,
+  //   signupTimestamp: 2013-09-01T11:23:29.781Z,
+  //   signupToken: 2f70719f-579f-4c47-b307-2d544e6336f9,
+  //   signupTokenExpires: 2013-09-02T11:23:29.780Z,
+  //   username: john
+  // }
+})
 ```
 
 ### 2. Find an existing user
