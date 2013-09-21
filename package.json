@@ -1,6 +1,6 @@
 {
   "name": "lockit-couchdb-adapter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "couchdb adapter for lockit",
   "main": "index.js",
   "scripts": {

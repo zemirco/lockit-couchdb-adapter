@@ -70,6 +70,9 @@ module.exports = function(config) {
 
     db.view('users', match, {key: query}, function(err, res) {
       if (err) return done(err);
+      // no user found
+      if (!res.rows.length) return done(new Error('lockit - Cannot find ' + match + ': "' + query + '"'));
+      // delete user from db
       db.destroy(res.rows[0].value._id, res.rows[0].value._rev, function(err, res) {
         if (err) return done(err);
         done(null, true);
