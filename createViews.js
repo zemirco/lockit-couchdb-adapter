@@ -1,5 +1,5 @@
 
-var config = require('../config.js');
+var config = require('test/config.js');
 
 // create couchdb templates
 var db = require('nano')({
