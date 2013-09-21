@@ -12,7 +12,8 @@ work in progress - come back later
 var adapter = require('....');
 ```
 
-To initialize the necessary views in your CouchDB run `node ./init.js`.
+To initialize the necessary views in your CouchDB run `node ./createViews.js`. The settings from `./test/config.js` are taken
+to connect to CouchDB.
 
 ## What's included?
 
@@ -30,27 +31,27 @@ The `user` object has the following properties
  - `_id`: unique id from CouchDB
  - `_rev`: revision from CouchDB
  - `email`: email that was provided at the beginning
- - `hash`: hashed password using `salt` and `crypto.pbkdf2`
- - `salt`: random salt built with `crypto.randomBytes`
+ - `hash`: hashed password using [bcrypt](https://github.com/ncb000gt/node.bcrypt.js/)
  - `signupTimestamp`: Date object to remember when the user signed up
  - `signupToken`: unique token sent to user's email for email verification
  - `signupTokenExpires`: Date object usually 24h ahead of `signupTimestamp`
  - `username`: username chosen during sign up
+ - `failedLoginAttempts`: save failed login attempts during login process, default is `0`
 
 ```js
-adapter.create('john', 'john@email.com', 'password123', function(err, user) {
+adapter.create('john', 'john@email.com', 'secret', function(err, user) {
   if (err) console.log(err);
   console.log(user);
   // {
-  //   _id: 6c656ff4bc96e9be5421dc31b3f39857,
-  //   _rev: 1-0f2898bf278f3ce07947344100dc48e2,
-  //   email: john@email.com,
-  //   hash: hETVkwFgzVrrLZ.....j4UywW6Vs9eJQNokD+....+wV7yE8oda1CE4HnaPRSf..., 
-  //   salt: qG+9aYSy7/2JehVZ9u...IOgJ7l0avHnoYLnYeKq77Rs...k4uj...4EzBvDYCa...,
-  //   signupTimestamp: 2013-09-01T11:23:29.781Z,
-  //   signupToken: 2f70719f-579f-4c47-b307-2d544e6336f9,
-  //   signupTokenExpires: 2013-09-02T11:23:29.780Z,
-  //   username: john
+  //  _id: '8c7cd00c55a25ceb279a8e893d011b3e',
+  //  _rev: '1-530a4cd8e67d51daf74e059899c39cd5',
+  //  username: 'john',
+  //  email: 'john@email.com',
+  //  signupToken: 'fed26ce9-2628-405a-b9fa-285d4a66f4c3',
+  //  signupTimestamp: '2013-09-21T10:10:50.357Z',
+  //  signupTokenExpires: null,
+  //  failedLoginAttempts: 0,
+  //  hash: '$2a$10$OUNHWf0nCksGgrVqR7O3f.YqqDTuTTe5HqGMw0OiNMy0cixwSS5Km'
   // }
 });
 ```
@@ -68,15 +69,15 @@ adapter.find('username', 'john', function(err, user) {
   if (err) console.log(err);
   console.log(user);
   // {
-  //   _id: 6c656ff4bc96e9be5421dc31b3f39857,
-  //   _rev: 1-0f2898bf278f3ce07947344100dc48e2,
-  //   email: john@email.com,
-  //   hash: hETVkwFgzVrrLZ.....j4UywW6Vs9eJQNokD+....+wV7yE8oda1CE4HnaPRSf..., 
-  //   salt: qG+9aYSy7/2JehVZ9u...IOgJ7l0avHnoYLnYeKq77Rs...k4uj...4EzBvDYCa...,
-  //   signupTimestamp: 2013-09-01T11:23:29.781Z,
-  //   signupToken: 2f70719f-579f-4c47-b307-2d544e6336f9,
-  //   signupTokenExpires: 2013-09-02T11:23:29.780Z,
-  //   username: john
+  //  _id: '8c7cd00c55a25ceb279a8e893d011b3e',
+  //  _rev: '1-530a4cd8e67d51daf74e059899c39cd5',
+  //  username: 'john',
+  //  email: 'john@email.com',
+  //  signupToken: 'fed26ce9-2628-405a-b9fa-285d4a66f4c3',
+  //  signupTimestamp: '2013-09-21T10:10:50.357Z',
+  //  signupTokenExpires: null,
+  //  failedLoginAttempts: 0,
+  //  hash: '$2a$10$OUNHWf0nCksGgrVqR7O3f.YqqDTuTTe5HqGMw0OiNMy0cixwSS5Km'
   // }
 });
 ```
@@ -123,7 +124,10 @@ adapter.delete('username', 'john', function(err, res) {
 
 ## Test
 
-`npm test`
+JavaScript files are hinted during tests and module is tested with Mocha. You need to have a CouchDB instance running 
+with the settings specified at `./test/config.js`. To start the test simply run the default Grunt task.
+
+`grunt`
 
 ## License
 

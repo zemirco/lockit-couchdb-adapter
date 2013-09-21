@@ -18,7 +18,7 @@ describe('couchdb adapter for lockit', function() {
 
     adapter.save('john', 'john@email.com', 'secret', function(err, res) {
       if (err) console.log(err);
-
+      
       res.should.have.property('signupToken');
       res.signupToken.should.match(/[0-9a-f]{22}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
       res.should.have.property('failedLoginAttempts');
