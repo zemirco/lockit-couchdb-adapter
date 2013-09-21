@@ -4,10 +4,23 @@
   "description": "couchdb adapter for lockit",
   "main": "index.js",
   "scripts": {
-    "test": "grunt default"
+    "test": "grunt"
   },
-  "author": "Mirco Zeiss <mirco.zeiss@gmail.com>",
+  "author": {
+    "name": "Mirco Zeiss",
+    "email": "mirco.zeiss@gmail.com",
+    "twitter": "zeMirco"
+  },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zeMirco/lockit-couchdb-adapter"
+  },
+  "keywords": [
+    "lockit",
+    "couchdb",
+    "adapter"
+  ],
   "dependencies": {
     "nano": "~4.1.1",
     "node-uuid": "~1.4.1",
