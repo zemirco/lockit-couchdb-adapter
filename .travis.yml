@@ -4,4 +4,4 @@ node_js:
 services: couchdb
 before_script:
   - curl -X PUT localhost:5984/test
-  - node ./init.js
+  - node ./createViews.js
