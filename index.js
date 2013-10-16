@@ -66,7 +66,7 @@ module.exports = function(config) {
   };
 
   // delete an existing user
-  adapter.delete = function(match, query, done) {
+  adapter.remove = function(match, query, done) {
 
     db.view('users', match, {key: query}, function(err, res) {
       if (err) return done(err);

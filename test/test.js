@@ -96,17 +96,17 @@ describe('couchdb adapter for lockit', function() {
     });
     
   });
-  
-  it('should delete a user', function(done) {
+
+  it('should remove a user', function(done) {
 
     var user = {
       username: 'jeff',
       email: 'jeff@email.com'
     };
 
-    db.insert(user, function(err, res) {
+    adapter.save('jeff', 'jeff@email.com', 'secret', function(err, res) {
       if (err) console.log(err);
-      adapter.delete('username', 'jeff', function(err, res) {
+      adapter.remove('username', 'jeff', function(err, res) {
         if (err) console.log(err);
         res.should.be.true;
         done();
@@ -116,12 +116,10 @@ describe('couchdb adapter for lockit', function() {
   });
   
   it('should return an error when delete cannot find a user', function(done) {
-
     adapter.delete('username', 'steve', function(err, res) {
       err.message.should.equal('lockit - Cannot find username: "steve"');
       done();
     });
-    
   });
   
 });
@@ -129,6 +127,6 @@ describe('couchdb adapter for lockit', function() {
 // remove users db
 after(function(done) {
 
-  adapter.delete('username', 'john', done);
+  adapter.remove('username', 'john', done);
       
 });
