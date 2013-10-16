@@ -115,8 +115,8 @@ describe('couchdb adapter for lockit', function() {
 
   });
   
-  it('should return an error when delete cannot find a user', function(done) {
-    adapter.delete('username', 'steve', function(err, res) {
+  it('should return an error when remove cannot find a user', function(done) {
+    adapter.remove('username', 'steve', function(err, res) {
       err.message.should.equal('lockit - Cannot find username: "steve"');
       done();
     });
