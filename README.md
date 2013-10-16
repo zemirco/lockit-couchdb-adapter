@@ -108,14 +108,14 @@ adapter.find('username', 'john', function(err, user) {
 
 ### 4. Delete user
 
-`adapter.delete(match, query, callback)`
+`adapter.remove(match, query, callback)`
 
  - `match`: String - one of the following: 'username', 'email' or 'signupToken'
  - `query`: String - corresponds to `match`, i.e. `john@email.com`
  - `callback`: Function - `callback(err, res)` - `res` is `true` if everything went fine
  
 ```js
-adapter.delete('username', 'john', function(err, res) {
+adapter.remove('username', 'john', function(err, res) {
   if (err) console.log(err);
   console.log(res);
   // true
