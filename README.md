@@ -1,21 +1,32 @@
-# CouchDB adapter for lockit
+# Lockit CouchDB adapter
 
-[![Build Status](https://travis-ci.org/zeMirco/lockit-couchdb-adapter.png)](https://travis-ci.org/zeMirco/lockit-couchdb-adapter)
+[![Build Status](https://travis-ci.org/zeMirco/lockit-couchdb-adapter.png)](https://travis-ci.org/zeMirco/lockit-couchdb-adapter) [![NPM version](https://badge.fury.io/js/lockit-couchdb-adapter.png)](http://badge.fury.io/js/lockit-couchdb-adapter)
 
-work in progress - come back later
+[![NPM](https://nodei.co/npm/lockit-couchdb-adapter.png)](https://nodei.co/npm/lockit-couchdb-adapter/)
+
+CouchDB adapter for [Lockit](https://github.com/zeMirco/lockit).
 
 ## Installation
 
-`npm install ...`
+`npm install lockit-couchdb-adapter`
 
 ```js
-var adapter = require('....');
+var adapter = require('lockit-couchdb-adapter');
 ```
+
+## Configuration
 
 To initialize the necessary views in your CouchDB run `node ./createViews.js`. The settings from `./test/config.js` are taken
 to connect to CouchDB.
 
-## What's included?
+The following settings are required.
+
+```js
+exports.db = 'couchdb';
+exports.dbUrl = 'http://127.0.0.1:5984/test';
+```
+
+## Features
 
 ### 1. Create user
 
