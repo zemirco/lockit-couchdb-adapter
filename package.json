@@ -22,15 +22,18 @@
     "adapter"
   ],
   "dependencies": {
-    "nano": "~4.1.1",
+    "nano": "~4.2.1",
     "node-uuid": "~1.4.1",
-    "bcrypt": "~0.7.7"
+    "bcrypt": "~0.7.7",
+    "debug": "~0.7.4",
+    "ms": "~0.6.2",
+    "moment": "~2.4.0"
   },
   "devDependencies": {
-    "should": "~1.2.2",
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.6.4",
-    "mocha": "~1.12.1",
-    "grunt-mocha-test": "~0.7.0"
+    "should": "~2.1.1",
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.7.2",
+    "mocha": "~1.16.1",
+    "grunt-mocha-test": "~0.8.1"
   }
 }
