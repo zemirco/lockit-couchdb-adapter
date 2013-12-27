@@ -1,5 +1,4 @@
 
-var path = require('path');
 var uuid = require('node-uuid');
 var bcrypt = require('bcrypt');
 var ms = require('ms');
