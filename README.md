@@ -30,7 +30,7 @@ exports.dbUrl = 'http://127.0.0.1:5984/test';
 
 ### 1. Create user
 
-`adapter.create(name, email, pass, callback)`
+`adapter.save(name, email, pass, callback)`
 
  - `name`: String - i.e. 'john'
  - `email`: String - i.e. 'john@email.com'
@@ -50,7 +50,7 @@ The `user` object has the following properties
  - `failedLoginAttempts`: save failed login attempts during login process, default is `0`
 
 ```js
-adapter.create('john', 'john@email.com', 'secret', function(err, user) {
+adapter.save('john', 'john@email.com', 'secret', function(err, user) {
   if (err) console.log(err);
   console.log(user);
   // {
@@ -60,7 +60,7 @@ adapter.create('john', 'john@email.com', 'secret', function(err, user) {
   //  email: 'john@email.com',
   //  signupToken: 'fed26ce9-2628-405a-b9fa-285d4a66f4c3',
   //  signupTimestamp: '2013-09-21T10:10:50.357Z',
-  //  signupTokenExpires: null,
+  //  signupTokenExpires: '2014-01-15T15:27:29.020Z',
   //  failedLoginAttempts: 0,
   //  hash: '$2a$10$OUNHWf0nCksGgrVqR7O3f.YqqDTuTTe5HqGMw0OiNMy0cixwSS5Km'
   // }
@@ -86,7 +86,7 @@ adapter.find('username', 'john', function(err, user) {
   //  email: 'john@email.com',
   //  signupToken: 'fed26ce9-2628-405a-b9fa-285d4a66f4c3',
   //  signupTimestamp: '2013-09-21T10:10:50.357Z',
-  //  signupTokenExpires: null,
+  //  signupTokenExpires: '2014-01-15T15:28:37.762Z',
   //  failedLoginAttempts: 0,
   //  hash: '$2a$10$OUNHWf0nCksGgrVqR7O3f.YqqDTuTTe5HqGMw0OiNMy0cixwSS5Km'
   // }
