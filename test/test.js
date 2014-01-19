@@ -2,10 +2,6 @@
 var config = require('./config.js');
 var should = require('should');
 
-var db = require('nano')({
-  url: config.dbUrl
-});
-
 var adapter = require('../index.js')(config);
 
 // start the tests
