@@ -17,9 +17,9 @@ var adapter = require('lockit-couchdb-adapter');
 ## Configuration
 
 To initialize the necessary views in your CouchDB run `node ./createViews.js`. 
-The setting from `./test/config.js` are taken to connect to CouchDB.
+The setting from `./test/config.js` is taken to connect to the database.
 
-You only need the connection string for your database.
+You only need the connection string in your `config.js`.
 
 ```js
 exports.db = 'http://127.0.0.1:5984/test';
