@@ -7,18 +7,15 @@ var debug = require('debug')('lockit-couchdb-adapter');
 
 module.exports = function(config) {
   
-  var db = require('nano')({
-    url: config.dbUrl,
-    request_defaults: config.request_defaults
-  });
-  
+  var db = require('nano')(config.db);
+    
   var adapter = {};
 
   // also return signupToken
   adapter.save = function(name, email, pw, done) {
 
     var now = moment().toDate();
-    var timespan = ms(config.signupTokenExpiration);
+    var timespan = ms(config.signup.tokenExpiration);
     var future = moment().add(timespan, 'ms').toDate();
 
     var user = {
