@@ -8,6 +8,16 @@ var debug = require('debug')('lockit-couchdb-adapter');
 module.exports = function(config) {
   
   var db = require('nano')(config.db);
+  
+  // load helper function
+  var init = require('./utils/create-views.js');
+  
+  // create views
+  init(config, function(err, saved) {
+    if (err) throw err;
+    var res = saved ? 'views saved / updated' : 'views found';
+    console.log(res);
+  });
     
   var adapter = {};
 
