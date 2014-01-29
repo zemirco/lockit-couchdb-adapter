@@ -59,7 +59,7 @@ module.exports = function(config) {
   // match is either "username", "email" or "signupToken"
   adapter.find = function(match, query, done) {
 
-    db.view('users', match, {key: query}, function(err, res) {
+    db.view('lockit-users', match, {key: query}, function(err, res) {
       if (err) return done(err);
       debug('Users found in CouchDB: %j', res);
       res.rows.length ? done(null, res.rows[0].value) : done(null);
@@ -81,7 +81,7 @@ module.exports = function(config) {
   // delete an existing user
   adapter.remove = function(match, query, done) {
 
-    db.view('users', match, {key: query}, function(err, res) {
+    db.view('lockit-users', match, {key: query}, function(err, res) {
       if (err) return done(err);
       debug('Users found in CouchDB: %j', res);
       // no user found

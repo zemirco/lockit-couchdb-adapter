@@ -31,6 +31,6 @@ module.exports = function(config, cb) {
   };
 
   // save to db
-  seed(db, {users: {views: views}}, cb);
+  seed(db, {"lockit-users": {views: views}}, cb);
     
 };
