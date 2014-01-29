@@ -1,13 +1,13 @@
 
-var config = require('./test/config.js');
+var seed = require('couchdb-seed-design');
 
-// create couchdb templates
-var db = require('nano')(config.db);
+module.exports = function(config, cb) {
 
-// couchdb views we need to make the app work
-var users = {
-  _id: '_design/users',
-  views: {
+  // create db connection
+  var db = require('nano')(config.db);
+  
+  // all necessary views
+  var views = {
     username: {
       map: function(doc) {
         emit(doc.username, doc);
@@ -28,11 +28,9 @@ var users = {
         emit(doc.pwdResetToken, doc);
       }
     }
-  }
-};
+  };
 
-// save views to db
-db.insert(users, function(err, body) {
-  if (err) console.log(err);
-  console.log('done');
-});
+  // save to db
+  seed(db, {users: {views: views}}, cb);
+    
+};
