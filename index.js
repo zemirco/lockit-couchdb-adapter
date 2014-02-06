@@ -16,7 +16,7 @@ module.exports = function(config) {
   init(config, function(err, saved) {
     if (err) throw err;
     var res = saved ? 'views saved / updated' : 'views found';
-    console.log(res);
+    debug(res);
   });
     
   var adapter = {};
