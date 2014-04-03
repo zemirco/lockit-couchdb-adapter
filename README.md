@@ -18,7 +18,7 @@ The adapter automatically saves the necessary views to your CouchDB.
 You only need the connection string in your `config.js`.
 
 ```js
-exports.db = 'http://127.0.0.1:5984/test';
+exports.db = 'http://127.0.0.1:5984/';
 ```
 
 ## Features
@@ -69,7 +69,7 @@ adapter.save('john', 'john@email.com', 'secret', function(err, user) {
  - `match`: String - one of the following: 'username', 'email' or 'signupToken'
  - `query`: String - corresponds to `match`, i.e. 'john@email.com'
  - `callback`:  Function - `callback(err, user)`
- 
+
 ```js
 adapter.find('username', 'john', function(err, user) {
   if (err) console.log(err);
@@ -94,16 +94,16 @@ adapter.find('username', 'john', function(err, user) {
 
  - `user`: Object - must have `_id` and `_rev` properties
  - `callback`: Function - `callback(err, user)` - `user` is the updated user object
- 
+
 ```js
 // get a user from db first
 adapter.find('username', 'john', function(err, user) {
   if (err) console.log(err);
-  
+
   // add some new properties to our existing user
   user.newKey = 'and some value';
   user.hasBeenUpdated = true;
-  
+
   // save updated user to db
   adapter.update(user, function(err, user) {
     if (err) console.log(err);
@@ -114,14 +114,13 @@ adapter.find('username', 'john', function(err, user) {
 
 ### 4. Delete user
 
-`adapter.remove(match, query, callback)`
+`adapter.remove(username, callback)`
 
- - `match`: String - one of the following: 'username', 'email' or 'signupToken'
- - `query`: String - corresponds to `match`, i.e. `john@email.com`
+ - `username`: String
  - `callback`: Function - `callback(err, res)` - `res` is `true` if everything went fine
- 
+
 ```js
-adapter.remove('username', 'john', function(err, res) {
+adapter.remove('john', function(err, res) {
   if (err) console.log(err);
   console.log(res);
   // true
