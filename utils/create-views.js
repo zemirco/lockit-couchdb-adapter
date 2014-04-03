@@ -1,11 +1,8 @@
 
 var seed = require('couchdb-seed-design');
 
-module.exports = function(config, cb) {
+module.exports = function(db, cb) {
 
-  // create db connection
-  var db = require('nano')(config.db);
-  
   // all necessary views
   var views = {
     username: {
@@ -31,6 +28,6 @@ module.exports = function(config, cb) {
   };
 
   // save to db
-  seed(db, {"lockit-users": {views: views}}, cb);
-    
+  seed(db, {'lockit-user': {views: views}}, cb);
+
 };
