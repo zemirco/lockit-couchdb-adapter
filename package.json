@@ -27,7 +27,8 @@
     "bcrypt": "~0.7.7",
     "ms": "~0.6.2",
     "moment": "~2.4.0",
-    "couchdb-seed-design": "0.0.5"
+    "couchdb-seed-design": "0.0.5",
+    "bluebird": "~1.2.1"
   },
   "devDependencies": {
     "should": "~2.1.1",
