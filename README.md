@@ -41,7 +41,7 @@ The `user` object has the following properties
  - `signupTimestamp`: Date object to remember when the user signed up
  - `signupToken`: unique token sent to user's email for email verification
  - `signupTokenExpires`: Date object usually 24h ahead of `signupTimestamp`
- - `username`: username chosen during sign up
+ - `name`: name chosen during sign up
  - `failedLoginAttempts`: save failed login attempts during login process, default is `0`
 
 ```js
@@ -51,13 +51,18 @@ adapter.save('john', 'john@email.com', 'secret', function(err, user) {
   // {
   //  _id: '8c7cd00c55a25ceb279a8e893d011b3e',
   //  _rev: '1-530a4cd8e67d51daf74e059899c39cd5',
-  //  username: 'john',
+  //  password_scheme: 'pbkdf2',
+  //  iterations: 10,
+  //  name: 'john',
   //  email: 'john@email.com',
+  //  roles: [ 'user' ],
+  //  type: 'user',
   //  signupToken: 'fed26ce9-2628-405a-b9fa-285d4a66f4c3',
   //  signupTimestamp: '2013-09-21T10:10:50.357Z',
   //  signupTokenExpires: '2014-01-15T15:27:29.020Z',
   //  failedLoginAttempts: 0,
-  //  hash: '$2a$10$OUNHWf0nCksGgrVqR7O3f.YqqDTuTTe5HqGMw0OiNMy0cixwSS5Km'
+  //  derived_key: '0a2b1714d6017e7efdc1154ee34c805dea29c06a',
+  //  salt: '3a213c87b6a33c70fec767acea697994'
   // }
 });
 ```
@@ -66,24 +71,29 @@ adapter.save('john', 'john@email.com', 'secret', function(err, user) {
 
 `adapter.find(match, query, callback)`
 
- - `match`: String - one of the following: 'username', 'email' or 'signupToken'
+ - `match`: String - one of the following: 'name', 'email' or 'signupToken'
  - `query`: String - corresponds to `match`, i.e. 'john@email.com'
  - `callback`:  Function - `callback(err, user)`
 
 ```js
-adapter.find('username', 'john', function(err, user) {
+adapter.find('name', 'john', function(err, user) {
   if (err) console.log(err);
   console.log(user);
   // {
   //  _id: '8c7cd00c55a25ceb279a8e893d011b3e',
   //  _rev: '1-530a4cd8e67d51daf74e059899c39cd5',
-  //  username: 'john',
+  //  password_scheme: 'pbkdf2',
+  //  iterations: 10,
+  //  name: 'john',
   //  email: 'john@email.com',
+  //  roles: [ 'user' ],
+  //  type: 'user',
   //  signupToken: 'fed26ce9-2628-405a-b9fa-285d4a66f4c3',
   //  signupTimestamp: '2013-09-21T10:10:50.357Z',
-  //  signupTokenExpires: '2014-01-15T15:28:37.762Z',
+  //  signupTokenExpires: '2014-01-15T15:27:29.020Z',
   //  failedLoginAttempts: 0,
-  //  hash: '$2a$10$OUNHWf0nCksGgrVqR7O3f.YqqDTuTTe5HqGMw0OiNMy0cixwSS5Km'
+  //  derived_key: '0a2b1714d6017e7efdc1154ee34c805dea29c06a',
+  //  salt: '3a213c87b6a33c70fec767acea697994'
   // }
 });
 ```
@@ -97,7 +107,7 @@ adapter.find('username', 'john', function(err, user) {
 
 ```js
 // get a user from db first
-adapter.find('username', 'john', function(err, user) {
+adapter.find('name', 'john', function(err, user) {
   if (err) console.log(err);
 
   // add some new properties to our existing user
@@ -114,9 +124,9 @@ adapter.find('username', 'john', function(err, user) {
 
 ### 4. Delete user
 
-`adapter.remove(username, callback)`
+`adapter.remove(name, callback)`
 
- - `username`: String
+ - `name`: String
  - `callback`: Function - `callback(err, res)` - `res` is `true` if everything went fine
 
 ```js
