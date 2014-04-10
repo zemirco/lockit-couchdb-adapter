@@ -1,4 +1,30 @@
 
+##### 0.4.0 - 2014-04-10
+
+- use optional `request_defaults`
+- use CouchDB's native authentication features
+
+  Each user gets an own database named `lockit/[name]`.
+  Before 0.4.0 `user` documents were saved within these dbs. Beginning with 0.4.0
+  each `user` document is saved in the `_users` db under the name `org.couchdb.user:[name]`.
+  Because CouchDB requires the `user` document to have a `name` key I had to change
+  the key from `username` to `name`. These changes will be reflected in all the other
+  Lockit db adapters.
+
+- add `_security` document to each `lockit/[name]` db
+
+  The per-user-db should only be readable by the rightful owner. So only `john`
+  should have access to the `lockit/john` database. CouchDB provides this feature
+  out of the box. I simply had to add an extra `_security` document.
+
+  ```js
+  {
+    members : {
+      names : [name]
+    }
+  }
+  ```
+
 ##### 0.3.0 - 2014-04-03
 
 - create one database per user - `lockit/:username`
