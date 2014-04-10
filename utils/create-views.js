@@ -5,11 +5,6 @@ module.exports = function(db, cb) {
 
   // all necessary views
   var views = {
-    username: {
-      map: function(doc) {
-        emit(doc.username, doc);
-      }
-    },
     email: {
       map: function(doc) {
         emit(doc.email, doc);
