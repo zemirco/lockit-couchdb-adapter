@@ -1,4 +1,3 @@
-
 var uuid = require('node-uuid');
 var ms = require('ms');
 var moment = require('moment');
@@ -34,7 +33,7 @@ module.exports = function(config) {
 
           // create a new user
           var user = {
-            name: name,
+            username: name,
             password: pw,
             email: email,
             roles: ['user'],
@@ -104,12 +103,12 @@ module.exports = function(config) {
   };
 
   // find a user
-  // match is either "name", "email" or "signupToken"
+  // match is either "username", "email" or "signupToken"
   adapter.find = function(match, query, done) {
     var db = nano.use('_users');
-    if (match === 'name') {
+    if (match === 'username') {
 
-      // if match is 'name' no need to query the db
+      // if match is 'username' no need to query the db
       db.get('org.couchdb.user:' + query, function(err, res) {
         if (err && err.status_code === 404) return done(null);
         if (err) return done(err);
