@@ -1,4 +1,18 @@
 
+##### 0.4.1 - 2014-04-17
+
+- database connection can also be an Object
+
+  ```js
+  // this still works - short form
+  exports.db = 'http://127.0.0.1:5984/';  
+
+  // this also works - long form (required for MongoDB and SQL)
+  exports.db = {
+    url: 'http://127.0.0.1:5984/'
+  };
+  ```
+
 ##### 0.4.0 - 2014-04-10
 
 - use optional `request_defaults`
