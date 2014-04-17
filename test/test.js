@@ -23,6 +23,19 @@ describe('couchdb adapter for lockit', function() {
     });
   });
 
+  it('should create a new user when using an object in config', function(done) {
+    var config_alt = JSON.parse(JSON.stringify(config));
+    config_alt.db = {
+      url: 'http://127.0.0.1:5984/'
+    };
+    var adapter_alt = require('../index.js')(config_alt);
+    adapter_alt.save('jack', 'jack@email.com', 'secret', function(err, res) {
+      if (err) console.log(err);
+      res.name.should.equal('jack');
+      done();
+    });
+  });
+
   it('should find a user by name', function(done) {
     adapter.find('name', 'john', function(err, res) {
       if (err) console.log(err);
@@ -95,5 +108,7 @@ describe('couchdb adapter for lockit', function() {
 
 // remove user and per-user-db
 after(function(done) {
-  adapter.remove('john', done);
+  adapter.remove('john', function(err, res) {
+    adapter.remove('jack', done);
+  });
 });
