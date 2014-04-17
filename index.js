@@ -7,8 +7,10 @@ var init = require('./utils/create-views.js');
 
 module.exports = function(config) {
 
+  var url = config.db.url || config.db;
+
   var nano = require('nano')({
-    url: config.db,
+    url: url,
     request_defaults: config.request_defaults
   });
 
