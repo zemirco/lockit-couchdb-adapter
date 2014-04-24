@@ -1,4 +1,3 @@
-
 var uuid = require('node-uuid');
 var ms = require('ms');
 var moment = require('moment');
@@ -8,6 +7,7 @@ var init = require('./utils/create-views.js');
 module.exports = function(config) {
 
   var url = config.db.url || config.db;
+  var dbNamePrefix = config.userDbNamePrefix || 'lockit/';
 
   var nano = require('nano')({
     url: url,
@@ -62,7 +62,7 @@ module.exports = function(config) {
     function createDb() {
       return new Promise(function(resolve, reject) {
         // create new db for user
-        var dbName = 'lockit/' + name;
+        var dbName = dbNamePrefix + name;
         nano.db.create(dbName, function(err, body) {
           if (err) return reject(err);
 
@@ -146,7 +146,7 @@ module.exports = function(config) {
     // remove user database
     function removeDb() {
       return new Promise(function(resolve, reject) {
-        nano.db.destroy('lockit/' + name, function(err, res) {
+        nano.db.destroy(dbNamePrefix + name, function(err, res) {
           if (err && err.status_code === 404) {
             return reject(new Error('lockit - Cannot find user "' + name + '"'));
           }
