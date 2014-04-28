@@ -1,4 +1,10 @@
 
+##### 0.4.2 - 2014-04-28
+
+- initialize all views on startup (fix #6)
+- per-user-db prefix is now configurable (fix #7)
+- update `nano`, `moment`, `bluebird`
+
 ##### 0.4.1 - 2014-04-17
 
 - database connection can also be an Object
