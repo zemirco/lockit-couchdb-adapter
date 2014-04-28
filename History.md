@@ -1,8 +1,8 @@
 
 ##### 0.4.2 - 2014-04-28
 
-- initialize all views on startup (fix #6)
-- per-user-db prefix is now configurable (fix #7)
+- initialize all views on startup (fix [#6](https://github.com/zeMirco/lockit-couchdb-adapter/issues/6))
+- per-user-db prefix is now configurable (fix [#7](https://github.com/zeMirco/lockit-couchdb-adapter/pull/7))
 - update `nano`, `moment`, `bluebird`
 
 ##### 0.4.1 - 2014-04-17
