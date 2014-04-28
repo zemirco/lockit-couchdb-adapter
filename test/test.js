@@ -2,6 +2,9 @@
 var config = require('./config.js');
 var should = require('should');
 
+// create db connection with pure nano to test custom prefix
+var nano = require('nano')(config.db);
+
 var adapter = require('../index.js')(config);
 
 // start the tests
@@ -33,6 +36,26 @@ describe('couchdb adapter for lockit', function() {
       if (err) console.log(err);
       res.name.should.equal('jack');
       done();
+    });
+  });
+
+  it('should use the custom prefix if provided', function(done) {
+    var config_alt = JSON.parse(JSON.stringify(config));
+    config_alt.db = {
+      url: 'http://127.0.0.1:5984/',
+      prefix: 'custom/'
+    };
+    var adapter_alt = require('../index.js')(config_alt);
+    adapter_alt.save('prefix', 'prefix@email.com', 'secret', function(err, res) {
+      if (err) console.log(err);
+
+      // make sure db 'custom/prefix' exists
+      nano.db.get('custom/prefix', function(err, body) {
+        if (err) console.log(err);
+        body.db_name.should.equal('custom/prefix');
+        done();
+      });
+
     });
   });
 
@@ -109,6 +132,17 @@ describe('couchdb adapter for lockit', function() {
 // remove user and per-user-db
 after(function(done) {
   adapter.remove('john', function(err, res) {
-    adapter.remove('jack', done);
+    adapter.remove('jack', function(err, res) {
+
+      // use alternative connection for removing user with custom prefix
+      var config_alt = JSON.parse(JSON.stringify(config));
+      config_alt.db = {
+        url: 'http://127.0.0.1:5984/',
+        prefix: 'custom/'
+      };
+      var adapter_alt = require('../index.js')(config_alt);
+
+      adapter_alt.remove('prefix', done);
+    });
   });
 });
