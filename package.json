@@ -22,12 +22,12 @@
     "adapter"
   ],
   "dependencies": {
-    "nano": "~4.2.1",
     "node-uuid": "~1.4.1",
     "ms": "~0.6.2",
-    "moment": "~2.4.0",
     "couchdb-seed-design": "0.0.5",
-    "bluebird": "~1.2.1"
+    "nano": "^5.8.0",
+    "moment": "^2.6.0",
+    "bluebird": "^1.2.4"
   },
   "devDependencies": {
     "should": "~2.1.1",
