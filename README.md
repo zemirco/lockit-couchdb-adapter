@@ -21,6 +21,15 @@ You only need the connection string in your `config.js`.
 exports.db = 'http://127.0.0.1:5984/';
 ```
 
+or (long format with custom per-user-db prefix)
+
+```js
+exports.db = {
+  url: 'http://127.0.0.1:5984/',
+  prefix: 'custom/'  // default is 'lockit/'
+}
+```
+
 ## Features
 
 ### 1. Create user
