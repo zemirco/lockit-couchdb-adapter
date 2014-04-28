@@ -7,11 +7,21 @@ var init = require('./utils/create-views.js');
 
 module.exports = function(config) {
 
+  // db connection string
   var url = config.db.url || config.db;
+
+  // per-user-db prefix
+  var prefix = config.db.prefix || 'lockit/';
 
   var nano = require('nano')({
     url: url,
     request_defaults: config.request_defaults
+  });
+
+  // create views
+  var _users = nano.use('_users');
+  init(_users, function(err, saved) {
+    if (err) throw err;
   });
 
   var adapter = {};
@@ -22,38 +32,31 @@ module.exports = function(config) {
     // create user document in _users db
     function createUser() {
       return new Promise(function (resolve, reject) {
-        // use _users database
-        var _users = nano.use('_users');
 
-        // create views if not already done
-        init(_users, function(err, saved) {
+        // init validation timespan
+        var now = moment().toDate();
+        var timespan = ms(config.signup.tokenExpiration);
+        var future = moment().add(timespan, 'ms').toDate();
+
+        // create a new user
+        var user = {
+          name: name,
+          password: pw,
+          email: email,
+          roles: ['user'],
+          type: 'user',
+          signupToken: uuid.v4(),
+          signupTimestamp: now,
+          signupTokenExpires: future,
+          failedLoginAttempts: 0
+        };
+
+        // add user to db
+        _users.insert(user, 'org.couchdb.user:' + name, function(err, body) {
           if (err) return reject(err);
-
-          // init validation timespan
-          var now = moment().toDate();
-          var timespan = ms(config.signup.tokenExpiration);
-          var future = moment().add(timespan, 'ms').toDate();
-
-          // create a new user
-          var user = {
-            name: name,
-            password: pw,
-            email: email,
-            roles: ['user'],
-            type: 'user',
-            signupToken: uuid.v4(),
-            signupTimestamp: now,
-            signupTokenExpires: future,
-            failedLoginAttempts: 0
-          };
-
-          // add user to db
-          _users.insert(user, 'org.couchdb.user:' + name, function(err, body) {
-            if (err) return reject(err);
-            resolve(body);
-          });
-
+          resolve(body);
         });
+
 
       });
     }
@@ -62,7 +65,7 @@ module.exports = function(config) {
     function createDb() {
       return new Promise(function(resolve, reject) {
         // create new db for user
-        var dbName = 'lockit/' + name;
+        var dbName = prefix + name;
         nano.db.create(dbName, function(err, body) {
           if (err) return reject(err);
 
@@ -92,9 +95,8 @@ module.exports = function(config) {
       createUser()
     ])
     .spread(function(dbResult, userInfo) {
-      var db = nano.use('_users');
       // get user from db
-      db.get(userInfo.id, function(err, res) {
+      _users.get(userInfo.id, function(err, res) {
         if (err) return done(err);
         done(null, res);
       });
@@ -108,11 +110,10 @@ module.exports = function(config) {
   // find a user
   // match is either "name", "email" or "signupToken"
   adapter.find = function(match, query, done) {
-    var db = nano.use('_users');
     if (match === 'name') {
 
       // if match is 'name' no need to query the db
-      db.get('org.couchdb.user:' + query, function(err, res) {
+      _users.get('org.couchdb.user:' + query, function(err, res) {
         if (err && err.status_code === 404) return done(null);
         if (err) return done(err);
         // callback
@@ -122,7 +123,7 @@ module.exports = function(config) {
     } else {
 
       // use a view document and query db
-      db.view('lockit-user', match, {key: query}, function(err, res) {
+      _users.view('lockit-user', match, {key: query}, function(err, res) {
         if (err) return done(err);
         if (!res.rows.length) return done(null, null);
         done(null, res.rows[0].value);
@@ -133,10 +134,9 @@ module.exports = function(config) {
 
   // update an existing user object
   adapter.update = function(user, done) {
-    var db = nano.use('_users');
-    db.insert(user, function(err, res) {
+    _users.insert(user, function(err, res) {
       if (err) return done(err);
-      db.get(res.id, done);
+      _users.get(res.id, done);
     });
   };
 
@@ -146,7 +146,7 @@ module.exports = function(config) {
     // remove user database
     function removeDb() {
       return new Promise(function(resolve, reject) {
-        nano.db.destroy('lockit/' + name, function(err, res) {
+        nano.db.destroy(prefix + name, function(err, res) {
           if (err && err.status_code === 404) {
             return reject(new Error('lockit - Cannot find user "' + name + '"'));
           }
@@ -160,14 +160,13 @@ module.exports = function(config) {
     function removeUser() {
       return new Promise(function (resolve, reject) {
         // get user first
-        var db = nano.use('_users');
-        db.get('org.couchdb.user:' + name, function(err, res) {
+        _users.get('org.couchdb.user:' + name, function(err, res) {
           if (err && err.status_code === 404) {
             return reject(new Error('lockit - Cannot find user "' + name + '"'));
           }
           if (err) return reject(err);
           // then delete user
-          db.destroy(res._id, res._rev, function(err, body) {
+          _users.destroy(res._id, res._rev, function(err, body) {
             if (err) return reject(err);
             resolve(body);
           });
