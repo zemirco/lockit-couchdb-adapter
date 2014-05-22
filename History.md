@@ -1,16 +1,16 @@
 
-##### 0.4.3 - 2014-05-22
+##### 0.4.3 / 2014-05-22
 
 - code refactoring
 - update dependencies
 
-##### 0.4.2 - 2014-04-28
+##### 0.4.2 / 2014-04-28
 
 - initialize all views on startup (fix [#6](https://github.com/zeMirco/lockit-couchdb-adapter/issues/6))
 - per-user-db prefix is now configurable (fix [#7](https://github.com/zeMirco/lockit-couchdb-adapter/pull/7))
 - update `nano`, `moment`, `bluebird`
 
-##### 0.4.1 - 2014-04-17
+##### 0.4.1 / 2014-04-17
 
 - database connection can also be an Object
 
@@ -24,7 +24,7 @@
   };
   ```
 
-##### 0.4.0 - 2014-04-10
+##### 0.4.0 / 2014-04-10
 
 - use optional `request_defaults`
 - use CouchDB's native authentication features
@@ -50,7 +50,7 @@
   }
   ```
 
-##### 0.3.0 - 2014-04-03
+##### 0.3.0 / 2014-04-03
 
 - create one database per user - `lockit/:username`
 - add `type: 'user'` to user document
@@ -80,19 +80,19 @@
 
 ...
 
-##### 0.1.0 - 2014-01-22
+##### 0.1.0 / 2014-01-22
 
  - drop `dbUrl` and use `db` instead
  - use new `config.js` structure
 
-##### 0.0.3 - 2013-12-27
+##### 0.0.3 / 2013-12-27
 
  - improve handling of timestrings by using moment
 
-##### 0.0.2 - 2013-09-21
+##### 0.0.2 / 2013-09-21
 
  - return proper `err` when `delete()` method cannot find a user
 
-##### 0.0.1 - 2013-09-21
+##### 0.0.1 / 2013-09-21
 
  - initial release
