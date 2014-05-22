@@ -1,8 +1,8 @@
 # Lockit CouchDB adapter
 
-[![Build Status](https://travis-ci.org/zeMirco/lockit-couchdb-adapter.svg?branch=master)](https://travis-ci.org/zeMirco/lockit-couchdb-adapter) [![NPM version](https://badge.fury.io/js/lockit-couchdb-adapter.svg)](http://badge.fury.io/js/lockit-couchdb-adapter)
+[![Build Status](https://travis-ci.org/zemirco/lockit-couchdb-adapter.svg?branch=master)](https://travis-ci.org/zemirco/lockit-couchdb-adapter) [![NPM version](https://badge.fury.io/js/lockit-couchdb-adapter.svg)](http://badge.fury.io/js/lockit-couchdb-adapter)
 
-CouchDB adapter for [Lockit](https://github.com/zeMirco/lockit).
+CouchDB adapter for [Lockit](https://github.com/zemirco/lockit).
 
 ## Installation
 
