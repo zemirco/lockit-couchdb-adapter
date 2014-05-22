@@ -1,4 +1,9 @@
 
+##### 0.4.3 - 2014-05-22
+
+- code refactoring
+- update dependencies
+
 ##### 0.4.2 - 2014-04-28
 
 - initialize all views on startup (fix [#6](https://github.com/zeMirco/lockit-couchdb-adapter/issues/6))
