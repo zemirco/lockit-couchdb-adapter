@@ -7,6 +7,13 @@ var nano = require('nano')(config.db);
 
 var adapter = require('../index.js')(config);
 
+// wait for connection to db
+before(function(done) {
+  setTimeout(function() {
+    done();
+  }, 1000);
+});
+
 // start the tests
 describe('couchdb adapter for lockit', function() {
 
