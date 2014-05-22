@@ -30,10 +30,10 @@
     "bluebird": "^1.2.4"
   },
   "devDependencies": {
-    "should": "~2.1.1",
-    "grunt": "~0.4.4",
-    "grunt-contrib-jshint": "~0.7.2",
-    "mocha": "~1.18.2",
-    "grunt-mocha-test": "~0.10.0"
+    "should": "^3.3.1",
+    "grunt": "^0.4.5",
+    "mocha": "^1.19.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-mocha-test": "^0.10.2"
   }
 }
