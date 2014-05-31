@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>lockit-couchdb-adapter</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="css/prism.css">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body data-spy="scroll" data-target="nav" data-offset="80">
+    <header>
+      <h1>
+        lockit-couchdb-adapter
+        <a href="https://github.com/zeMirco/lockit-couchdb-adapter" target="_blank" class="repo-link">
+          <i class="fa fa-github"></i>
+        </a>
+      </h1>
+    </header>
+    <nav>
+      <ul class="nav">
+        
+        <li>
+          <a href="#save-name-email-pw-done-" data-lineno="78">save</a>
+        </li>
+        
+        <li>
+          <a href="#find-match-query-done-" data-lineno="178">find</a>
+        </li>
+        
+        <li>
+          <a href="#update-user-done-" data-lineno="224">update</a>
+        </li>
+        
+        <li>
+          <a href="#remove-name-done-" data-lineno="248">remove</a>
+        </li>
+        
+      </ul>
+    </nav>
+    <main>
+      
+      <section>
+        <h3 id="save-name-email-pw-done-">save(name, email, pw, done)</h3>
+<p>Create a new user.</p>
+<ul>
+<li><p><code>name</code> <strong>String</strong> - User name</p>
+</li>
+<li><p><code>email</code> <strong>String</strong> - User email</p>
+</li>
+<li><p><code>pw</code> <strong>String</strong> - Plain text user password</p>
+</li>
+<li><p><code>done</code> <strong>function</strong> - Callback function <code>function(err, user){}</code></p>
+</li>
+</ul>
+<h4 id="example">Example</h4>
+<pre><code class="lang-javascript">adapter.save(&#39;john&#39;, &#39;john@email.com&#39;, &#39;secret&#39;, function(err, user) {
+  if (err) console.log(err);
+  console.log(user);
+  // {
+  //  _id: &#39;8c7cd00c55a25ceb279a8e893d011b3e&#39;,
+  //  _rev: &#39;1-530a4cd8e67d51daf74e059899c39cd5&#39;,
+  //  password_scheme: &#39;pbkdf2&#39;,
+  //  iterations: 10,
+  //  name: &#39;john&#39;,
+  //  email: &#39;john@email.com&#39;,
+  //  roles: [ &#39;user&#39; ],
+  //  type: &#39;user&#39;,
+  //  signupToken: &#39;fed26ce9-2628-405a-b9fa-285d4a66f4c3&#39;,
+  //  signupTimestamp: &#39;2013-09-21T10:10:50.357Z&#39;,
+  //  signupTokenExpires: &#39;2014-01-15T15:27:29.020Z&#39;,
+  //  failedLoginAttempts: 0,
+  //  derived_key: &#39;0a2b1714d6017e7efdc1154ee34c805dea29c06a&#39;,
+  //  salt: &#39;3a213c87b6a33c70fec767acea697994&#39;
+  // }
+});
+</code></pre>
+
+      </section>
+      
+      <section>
+        <h3 id="find-match-query-done-">find(match, query, done)</h3>
+<p>Find user. Match is either <code>name</code>, <code>email</code> or <code>signupToken</code>.</p>
+<ul>
+<li><p><code>match</code> <strong>String</strong> - Property to find user by. <code>name</code>, <code>email</code> or <code>signupToken</code></p>
+</li>
+<li><p><code>query</code> <strong>String</strong> - Corresponding value to <code>match</code></p>
+</li>
+<li><p><code>done</code> <strong>function</strong> - Callback function <code>function(err, user){}</code></p>
+</li>
+</ul>
+<h4 id="example">Example</h4>
+<pre><code class="lang-javascript">adapter.find(&#39;name&#39;, &#39;john&#39;, function(err, user) {
+  if (err) console.log(err);
+  console.log(user);
+  // {
+  //  _id: &#39;8c7cd00c55a25ceb279a8e893d011b3e&#39;,
+  //  _rev: &#39;1-530a4cd8e67d51daf74e059899c39cd5&#39;,
+  //  password_scheme: &#39;pbkdf2&#39;,
+  //  iterations: 10,
+  //  name: &#39;john&#39;,
+  //  email: &#39;john@email.com&#39;,
+  //  roles: [ &#39;user&#39; ],
+  //  type: &#39;user&#39;,
+  //  signupToken: &#39;fed26ce9-2628-405a-b9fa-285d4a66f4c3&#39;,
+  //  signupTimestamp: &#39;2013-09-21T10:10:50.357Z&#39;,
+  //  signupTokenExpires: &#39;2014-01-15T15:27:29.020Z&#39;,
+  //  failedLoginAttempts: 0,
+  //  derived_key: &#39;0a2b1714d6017e7efdc1154ee34c805dea29c06a&#39;,
+  //  salt: &#39;3a213c87b6a33c70fec767acea697994&#39;
+  // }
+});
+</code></pre>
+
+      </section>
+      
+      <section>
+        <h3 id="update-user-done-">update(user, done)</h3>
+<p>Update existing user.</p>
+<ul>
+<li><p><code>user</code> <strong>Object</strong> - Existing user from db</p>
+</li>
+<li><p><code>done</code> <strong>function</strong> - Callback function <code>function(err, user){}</code></p>
+</li>
+</ul>
+<h4 id="example">Example</h4>
+<pre><code class="lang-javascript">// get user from db
+adapter.find(&#39;name&#39;, &#39;john&#39;, function(err, user) {
+  if (err) console.log(err);
+
+  // add some new properties to our existing user
+  user.newKey = &#39;and some value&#39;;
+  user.hasBeenUpdated = true;
+
+  // save updated user to db
+  adapter.update(user, function(err, user) {
+    if (err) console.log(err);
+    // ...
+  });
+});
+</code></pre>
+
+      </section>
+      
+      <section>
+        <h3 id="remove-name-done-">remove(name, done)</h3>
+<p>Delete existing user.</p>
+<ul>
+<li><p><code>name</code> <strong>String</strong> - User name</p>
+</li>
+<li><p><code>done</code> <strong>function</strong> - Callback function <code>function(err, res){}</code></p>
+</li>
+</ul>
+<h4 id="example">Example</h4>
+<pre><code class="lang-javascript">adapter.remove(&#39;john&#39;, function(err, res) {
+  if (err) console.log(err);
+  console.log(res);
+  // true
+});
+</code></pre>
+
+      </section>
+      
+    </main>
+  </body>
+  <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/prism.js"></script>
+  <script>
+    // add 'language-javascript' to <code> blocks (some already have it)
+    var codeBlocks = document.getElementsByTagName('code');
+    for (var i = 0; i < codeBlocks.length; i++) {
+      var block = codeBlocks[i];
+      block.classList.add('language-javascript');
+    }
+    // add hover links to all function headings
+    var headings = document.getElementsByTagName('h3');
+    for (var i = 0; i < headings.length; i++) {
+      var heading = headings[i];
+      var id = heading.getAttribute('id');
+      // create anchor link for deep linking to function
+      var anchorLink = document.createElement('a');
+      anchorLink.href = '#' + id;
+      anchorLink.classList.add('link');
+      anchorLink.innerHTML = '<i class="fa fa-link"></i>';
+      heading.appendChild(anchorLink);
+      // create link to github repo code with line number
+      var navLink = document.querySelector('a[href="#' + id + '"]');
+      var lineno = navLink.getAttribute('data-lineno');
+      var sourceLink = document.createElement('a');
+      sourceLink.href = 'https://github.com/zeMirco/lockit-couchdb-adapter/blob/master/index.js#L' + lineno;
+      sourceLink.classList.add('source-link');
+      sourceLink.innerHTML = '<i class="fa fa-code"></i>';
+      sourceLink.target = '_blank';
+      heading.appendChild(sourceLink);
+    }
+    // highlight
+    Prism.highlightAll();
+  </script>
+</html>
