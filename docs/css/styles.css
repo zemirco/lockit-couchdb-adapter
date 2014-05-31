@@ -1,0 +1,175 @@
+
+@font-face {
+  font-family: 'Source Code Pro';
+  src: url('../fonts/sourcecodepro-regular-webfont.eot');
+  src: url('../fonts/sourcecodepro-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/sourcecodepro-regular-webfont.woff') format('woff'),
+       url('../fonts/sourcecodepro-regular-webfont.ttf') format('truetype'),
+       url('../fonts/sourcecodepro-regular-webfont.svg#source_code_proregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  src: url('../fonts/firasans-regular-webfont.eot');
+  src: url('../fonts/firasans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/firasans-regular-webfont.woff') format('woff'),
+       url('../fonts/firasans-regular-webfont.ttf') format('truetype'),
+       url('../fonts/firasans-regular-webfont.svg#fira_sansregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  src: url('../fonts/firasans-bold-webfont.eot');
+  src: url('../fonts/firasans-bold-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/firasans-bold-webfont.woff') format('woff'),
+       url('../fonts/firasans-bold-webfont.ttf') format('truetype'),
+       url('../fonts/firasans-bold-webfont.svg#fira_sansbold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font: 400 14px/1.5 'Fira Sans', 'Arial', sans-serif;
+  color: #666;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, .9);
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 0 4px #eee;
+  width: 100%;
+  z-index: 100;
+  height: 50px;
+}
+
+h1 {
+  width: 700px;
+  margin: 0 auto;
+  line-height: 50px;
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  width: 700px;
+  margin: 0 auto;
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+  font-family: 'Source Code Pro';
+}
+
+pre code {
+  font-size: 12px;
+}
+
+h1, h2, h3, h4 {
+  color: #353535;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: #259dff;
+  text-decoration: none;
+}
+
+/* navigation on right side */
+nav {
+  position: fixed;
+  right: 40px;
+  top: 60px;
+  text-align: right;
+}
+
+nav ul {
+  list-style: none;
+}
+
+section {
+  /* important for absolute positioned links inside */
+  position: relative;
+  margin-bottom: 40px;
+}
+
+/* custom code block styles */
+pre[class*="language-"] {
+  background: none;
+  border: 1px solid #e7e7e7;
+}
+
+/* heading hover link */
+.link {
+  position: absolute;
+  top: 80px;
+  left: -20px;
+  opacity: 0;
+  width: 22px;
+  color: #353535;
+}
+
+/* github repo source code link */
+.source-link {
+  color: #353535;
+  padding-left: 5px;
+  opacity: 0;
+}
+
+/* show link symbol on heading and link hover */
+h3:hover .link,
+h3:hover .source-link {
+  opacity: 1;
+}
+
+.link:hover,
+.source-link:hover {
+  opacity: 1;
+}
+
+.repo-link {
+  color: #353535;
+  margin-left: 15px;
+}
+
+nav a {
+  color: #666;
+}
+
+/* scrollspy classes */
+li.active a,
+li.active:hover a,
+li:focus a  {
+  color: #259dff;
+}
+
+/* put some space between anchors and top */
+h3[id] {
+  padding-top: 80px;
+}
+
+/* don't indent unordered list in section */
+section ul {
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+section ul ul {
+  padding-left: 30px;
+}
+
+/* decrease space between parameters list */
+section li p {
+  margin: 10px initial;
+}
