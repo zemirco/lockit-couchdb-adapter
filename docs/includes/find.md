@@ -1,10 +1,10 @@
 
 ### find(match, query, done)
 
-Find user. Match is either `name`, `email` or `signupToken`.
+Find user. Match is either `'name'`, `'email'` or `'signupToken'`.
 
 
-- `match` **String** - Property to find user by. <code>name</code>, <code>email</code> or <code>signupToken</code>
+- `match` **String** - Property to find user by. <code>'name'</code>, <code>'email'</code> or <code>'signupToken'</code>
 
 - `query` **String** - Corresponding value to <code>match</code>
 
