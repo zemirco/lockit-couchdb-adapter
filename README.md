@@ -26,7 +26,8 @@ or (long format with custom per-user-db prefix)
 ```js
 exports.db = {
   url: 'http://127.0.0.1:5984/',
-  prefix: 'custom/'  // default is 'lockit/'
+  prefix: 'custom/'  // default is 'lockit/',
+  database: 'myDB'  // database to write users to, defaults to '_users'
 }
 ```
 
