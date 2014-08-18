@@ -26,6 +26,7 @@ var Adapter = module.exports = function(config) {
 
   // db connection string
   var url = config.db.url || config.db;
+  var usersDbName = config.db.usersDbName || '_users';
 
   // per-user-db prefix
   this.prefix = config.db.prefix || 'lockit/';
@@ -36,7 +37,7 @@ var Adapter = module.exports = function(config) {
   });
 
   // create views
-  this._users = this.nano.use('_users');
+  this._users = this.nano.use(usersDbName);
   init(this._users, function(err, saved) {
     if (err) throw err;
   });
