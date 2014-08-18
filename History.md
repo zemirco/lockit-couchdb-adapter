@@ -1,4 +1,9 @@
 
+##### 0.5.0 / 2014-08-18
+
+- make `_users` database name configurable
+- update dependencies
+
 ##### 0.4.3 / 2014-05-22
 
 - code refactoring
