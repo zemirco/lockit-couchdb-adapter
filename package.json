@@ -25,9 +25,9 @@
     "node-uuid": "~1.4.1",
     "ms": "~0.6.2",
     "couchdb-seed-design": "0.0.5",
-    "nano": "^5.8.0",
-    "moment": "^2.6.0",
-    "bluebird": "^1.2.4"
+    "nano": "^5.10.0",
+    "moment": "^2.8.1",
+    "bluebird": "^2.3.0"
   },
   "devDependencies": {
     "should": "^3.3.1",
