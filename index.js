@@ -2,7 +2,7 @@
 var uuid = require('node-uuid');
 var ms = require('ms');
 var moment = require('moment');
-var Promise = require('bluebird');
+var Bluebird = require('bluebird');
 var init = require('./utils/create-views.js');
 
 
@@ -81,7 +81,7 @@ Adapter.prototype.save = function(name, email, pw, done) {
 
   // create user document in _users db
   var createUser = function() {
-    return new Promise(function (resolve, reject) {
+    return new Bluebird(function (resolve, reject) {
       // init validation timespan
       var now = moment().toDate();
       var timespan = ms(that.config.signup.tokenExpiration);
@@ -108,7 +108,7 @@ Adapter.prototype.save = function(name, email, pw, done) {
 
   // create per-user-db
   var createDb = function() {
-    return new Promise(function(resolve, reject) {
+    return new Bluebird(function(resolve, reject) {
       // create new db for user
       var dbName = that.prefix + name;
       that.nano.db.create(dbName, function(err, body) {
@@ -131,7 +131,7 @@ Adapter.prototype.save = function(name, email, pw, done) {
   };
 
   // create both and callback when done
-  Promise.all([createDb(), createUser()])
+  Bluebird.all([createDb(), createUser()])
   .spread(function(dbResult, userInfo) {
     // get user from db
     that._users.get(userInfo.id, function(err, res) {
@@ -251,7 +251,7 @@ Adapter.prototype.remove = function(name, done) {
 
   // remove user database
   var removeDb = function() {
-    return new Promise(function(resolve, reject) {
+    return new Bluebird(function(resolve, reject) {
       that.nano.db.destroy(that.prefix + name, function(err, res) {
         if (err && err.status_code === 404) {
           return reject(new Error('lockit - Cannot find user "' + name + '"'));
@@ -264,7 +264,7 @@ Adapter.prototype.remove = function(name, done) {
 
   // and remove user from _users db
   var removeUser = function() {
-    return new Promise(function (resolve, reject) {
+    return new Bluebird(function (resolve, reject) {
       // get user first
       that._users.get('org.couchdb.user:' + name, function(err, res) {
         if (err && err.status_code === 404) {
@@ -281,7 +281,7 @@ Adapter.prototype.remove = function(name, done) {
   };
 
   // do both and callback
-  Promise.all([removeDb(),removeUser()])
+  Bluebird.all([removeDb(),removeUser()])
   .then(function() {
     done(null, true);
   })
