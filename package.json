@@ -9,12 +9,12 @@
   "author": {
     "name": "Mirco Zeiss",
     "email": "mirco.zeiss@gmail.com",
-    "twitter": "zeMirco"
+    "twitter": "zemirco"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zeMirco/lockit-couchdb-adapter"
+    "url": "https://github.com/zemirco/lockit-couchdb-adapter"
   },
   "keywords": [
     "lockit",
@@ -30,10 +30,11 @@
     "bluebird": "^2.3.0"
   },
   "devDependencies": {
-    "should": "^4.0.4",
+    "eslint": "^0.24.0",
     "grunt": "^0.4.5",
-    "mocha": "^1.21.4",
     "grunt-contrib-jshint": "^0.10.0",
-    "grunt-mocha-test": "^0.11.0"
+    "grunt-mocha-test": "^0.11.0",
+    "mocha": "^1.21.4",
+    "should": "^4.0.4"
   }
 }

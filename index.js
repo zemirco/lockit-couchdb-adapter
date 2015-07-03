@@ -1,3 +1,4 @@
+'use strict';
 
 var uuid = require('node-uuid');
 var ms = require('ms');
@@ -20,7 +21,7 @@ var init = require('./utils/create-views.js');
  */
 var Adapter = module.exports = function(config) {
 
-  if (!(this instanceof Adapter)) return new Adapter(config);
+  if (!(this instanceof Adapter)) {return new Adapter(config); }
 
   this.config = config;
 
@@ -38,8 +39,8 @@ var Adapter = module.exports = function(config) {
 
   // create views
   this._users = this.nano.use(usersDbName);
-  init(this._users, function(err, saved) {
-    if (err) throw err;
+  init(this._users, function(err) {
+    if (err) {throw err; }
   });
 
 };
@@ -100,7 +101,7 @@ Adapter.prototype.save = function(name, email, pw, done) {
       };
       // add user to db
       that._users.insert(user, 'org.couchdb.user:' + name, function(err, body) {
-        if (err) return reject(err);
+        if (err) {return reject(err); }
         resolve(body);
       });
     });
@@ -111,19 +112,19 @@ Adapter.prototype.save = function(name, email, pw, done) {
     return new Bluebird(function(resolve, reject) {
       // create new db for user
       var dbName = that.prefix + name;
-      that.nano.db.create(dbName, function(err, body) {
-        if (err) return reject(err);
+      that.nano.db.create(dbName, function(err) {
+        if (err) {return reject(err); }
         // use new db
         var db = that.nano.use(dbName);
         // create _security document
         var securityDoc = {
-           members : {
-             names : [name]
+           members: {
+             names: [name]
            }
         };
         // save security document to db
-        db.insert(securityDoc, '_security', function(err, body) {
-          if (err) return reject(err);
+        db.insert(securityDoc, '_security', function(insertErr, body) {
+          if (insertErr) {return reject(insertErr); }
           resolve(body);
         });
       });
@@ -135,7 +136,7 @@ Adapter.prototype.save = function(name, email, pw, done) {
   .spread(function(dbResult, userInfo) {
     // get user from db
     that._users.get(userInfo.id, function(err, res) {
-      if (err) return done(err);
+      if (err) {return done(err); }
       done(null, res);
     });
   })
@@ -182,8 +183,8 @@ Adapter.prototype.find = function(match, query, done) {
   if (match === 'name') {
     // if match is 'name' no need to query the db
     return that._users.get('org.couchdb.user:' + query, function(err, res) {
-      if (err && err.status_code === 404) return done(null);
-      if (err) return done(err);
+      if (err && err.status_code === 404) {return done(null); }
+      if (err) {return done(err); }
       // callback
       done(null, res);
     });
@@ -191,8 +192,8 @@ Adapter.prototype.find = function(match, query, done) {
 
   // use a view document and query db
   that._users.view('lockit-user', match, {key: query}, function(err, res) {
-    if (err) return done(err);
-    if (!res.rows.length) return done(null, null);
+    if (err) {return done(err); }
+    if (!res.rows.length) {return done(null, null); }
     done(null, res.rows[0].value);
   });
 
@@ -226,7 +227,7 @@ Adapter.prototype.update = function(user, done) {
   var that = this;
 
   that._users.insert(user, function(err, res) {
-    if (err) return done(err);
+    if (err) {return done(err); }
     that._users.get(res.id, done);
   });
 };
@@ -256,7 +257,7 @@ Adapter.prototype.remove = function(name, done) {
         if (err && err.status_code === 404) {
           return reject(new Error('lockit - Cannot find user "' + name + '"'));
         }
-        if (err) return reject(err);
+        if (err) {return reject(err); }
         resolve(res);
       });
     });
@@ -270,10 +271,10 @@ Adapter.prototype.remove = function(name, done) {
         if (err && err.status_code === 404) {
           return reject(new Error('lockit - Cannot find user "' + name + '"'));
         }
-        if (err) return reject(err);
+        if (err) {return reject(err); }
         // then delete user
-        that._users.destroy(res._id, res._rev, function(err, body) {
-          if (err) return reject(err);
+        that._users.destroy(res._id, res._rev, function(destroyErr, body) {
+          if (destroyErr) {return reject(destroyErr); }
           resolve(body);
         });
       });
@@ -281,7 +282,7 @@ Adapter.prototype.remove = function(name, done) {
   };
 
   // do both and callback
-  Bluebird.all([removeDb(),removeUser()])
+  Bluebird.all([removeDb(), removeUser()])
   .then(function() {
     done(null, true);
   })
