@@ -1,4 +1,11 @@
 
+##### 0.5.1 / 2015-07-03
+
+- update dependencies
+- use eslint
+- use make for grunt
+- fix breaking change (status_code -> statusCode) introduced by `nano`
+
 ##### 0.5.0 / 2014-08-18
 
 - make `_users` database name configurable
