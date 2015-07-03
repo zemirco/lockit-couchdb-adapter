@@ -1,3 +1,4 @@
+'use strict';
 
 var config = require('./config.js');
 var should = require('should');
@@ -22,7 +23,7 @@ describe('couchdb adapter for lockit', function() {
 
   it('should create a new user', function(done) {
     adapter.save('john', 'john@email.com', 'secret', function(err, res) {
-      if (err) console.log(err);
+      if (err) {console.log(err); }
       res.should.have.property('signupToken');
       res.signupToken.should.match(/[0-9a-f]{22}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
       res.should.have.property('failedLoginAttempts');
@@ -40,7 +41,7 @@ describe('couchdb adapter for lockit', function() {
     };
     var adapter_alt = require('../index.js')(config_alt);
     adapter_alt.save('jack', 'jack@email.com', 'secret', function(err, res) {
-      if (err) console.log(err);
+      if (err) {console.log(err); }
       res.name.should.equal('jack');
       done();
     });
@@ -53,12 +54,12 @@ describe('couchdb adapter for lockit', function() {
       prefix: 'custom/'
     };
     var adapter_alt = require('../index.js')(config_alt);
-    adapter_alt.save('prefix', 'prefix@email.com', 'secret', function(err, res) {
-      if (err) console.log(err);
+    adapter_alt.save('prefix', 'prefix@email.com', 'secret', function(err) {
+      if (err) {console.log(err); }
 
       // make sure db 'custom/prefix' exists
-      nano.db.get('custom/prefix', function(err, body) {
-        if (err) console.log(err);
+      nano.db.get('custom/prefix', function(getErr, body) {
+        if (getErr) {console.log(getErr); }
         body.db_name.should.equal('custom/prefix');
         done();
       });
@@ -68,7 +69,7 @@ describe('couchdb adapter for lockit', function() {
 
   it('should find a user by name', function(done) {
     adapter.find('name', 'john', function(err, res) {
-      if (err) console.log(err);
+      if (err) {console.log(err); }
       res.name.should.equal('john');
       res.email.should.equal('john@email.com');
       done();
@@ -77,7 +78,7 @@ describe('couchdb adapter for lockit', function() {
 
   it('should return null when no user is found', function(done) {
     adapter.find('name', 'jim', function(err, res) {
-      if (err) console.log(err);
+      if (err) {console.log(err); }
       should.not.exist(err);
       should.not.exist(res);
       done();
@@ -86,7 +87,7 @@ describe('couchdb adapter for lockit', function() {
 
   it('should find a user by email', function(done) {
     adapter.find('email', 'john@email.com', function(err, res) {
-      if (err) console.log(err);
+      if (err) {console.log(err); }
       res.name.should.equal('john');
       res.email.should.equal('john@email.com');
       done();
@@ -95,7 +96,7 @@ describe('couchdb adapter for lockit', function() {
 
   it('should find a user by signup token', function(done) {
     adapter.find('signupToken', _tmp_signupToken, function(err, res) {
-      if (err) console.log(err);
+      if (err) {console.log(err); }
       res.name.should.equal('john');
       res.email.should.equal('john@email.com');
       done();
@@ -104,11 +105,11 @@ describe('couchdb adapter for lockit', function() {
 
   it('should update an existing user', function(done) {
     adapter.find('name', 'john', function(err, doc) {
-      if (err) console.log(err);
+      if (err) {console.log(err); }
       doc.test = 'works';
       doc.editet = true;
-      adapter.update(doc, function(err, res) {
-        if (err) console.log(err);
+      adapter.update(doc, function(updateErr, res) {
+        if (updateErr) {console.log(updateErr); }
         res.test.should.equal('works');
         res.editet.should.be.true;
         done();
@@ -117,10 +118,10 @@ describe('couchdb adapter for lockit', function() {
   });
 
   it('should remove a user', function(done) {
-    adapter.save('jeff', 'jeff@email.com', 'secret', function(err, res) {
-      if (err) console.log(err);
-      adapter.remove('jeff', function(err, res) {
-        if (err) console.log(err);
+    adapter.save('jeff', 'jeff@email.com', 'secret', function(err) {
+      if (err) {console.log(err); }
+      adapter.remove('jeff', function(removeErr, res) {
+        if (removeErr) {console.log(removeErr); }
         res.should.be.true;
         done();
       });
@@ -128,7 +129,7 @@ describe('couchdb adapter for lockit', function() {
   });
 
   it('should return an error when remove cannot find a user', function(done) {
-    adapter.remove('steve', function(err, res) {
+    adapter.remove('steve', function(err) {
       err.message.should.equal('lockit - Cannot find user "steve"');
       done();
     });
@@ -138,8 +139,10 @@ describe('couchdb adapter for lockit', function() {
 
 // remove user and per-user-db
 after(function(done) {
-  adapter.remove('john', function(err, res) {
-    adapter.remove('jack', function(err, res) {
+  adapter.remove('john', function(err) {
+    if (err) {console.log(err); }
+    adapter.remove('jack', function(removeErr) {
+      if (removeErr) {console.log(removeErr); }
 
       // use alternative connection for removing user with custom prefix
       var config_alt = JSON.parse(JSON.stringify(config));
