@@ -183,7 +183,7 @@ Adapter.prototype.find = function(match, query, done) {
   if (match === 'name') {
     // if match is 'name' no need to query the db
     return that._users.get('org.couchdb.user:' + query, function(err, res) {
-      if (err && err.status_code === 404) {return done(null); }
+      if (err && err.statusCode === 404) {return done(null); }
       if (err) {return done(err); }
       // callback
       done(null, res);
@@ -254,7 +254,7 @@ Adapter.prototype.remove = function(name, done) {
   var removeDb = function() {
     return new Bluebird(function(resolve, reject) {
       that.nano.db.destroy(that.prefix + name, function(err, res) {
-        if (err && err.status_code === 404) {
+        if (err && err.statusCode === 404) {
           return reject(new Error('lockit - Cannot find user "' + name + '"'));
         }
         if (err) {return reject(err); }
@@ -268,7 +268,7 @@ Adapter.prototype.remove = function(name, done) {
     return new Bluebird(function (resolve, reject) {
       // get user first
       that._users.get('org.couchdb.user:' + name, function(err, res) {
-        if (err && err.status_code === 404) {
+        if (err && err.statusCode === 404) {
           return reject(new Error('lockit - Cannot find user "' + name + '"'));
         }
         if (err) {return reject(err); }

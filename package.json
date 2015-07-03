@@ -22,16 +22,16 @@
     "adapter"
   ],
   "dependencies": {
-    "node-uuid": "~1.4.1",
-    "ms": "~0.6.2",
+    "bluebird": "^2.3.0",
     "couchdb-seed-design": "0.0.5",
-    "nano": "^5.10.0",
     "moment": "^2.8.1",
-    "bluebird": "^2.3.0"
+    "ms": "^0.7.1",
+    "nano": "^6.1.4",
+    "node-uuid": "~1.4.1"
   },
   "devDependencies": {
     "eslint": "^0.24.0",
     "mocha": "^2.2.5",
-    "should": "^4.0.4"
+    "should": "^7.0.1"
   }
 }
