@@ -4,7 +4,7 @@
   "description": "couchdb adapter for lockit",
   "main": "index.js",
   "scripts": {
-    "test": "grunt"
+    "test": "make test"
   },
   "author": {
     "name": "Mirco Zeiss",
