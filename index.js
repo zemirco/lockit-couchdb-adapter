@@ -95,6 +95,7 @@ Adapter.prototype.save = function(name, email, pw, done) {
               user = {
                   name: name,
                   password_scheme: 'pbkdf2',
+                  email: email,
                   derived_key: hash,
                   salt: saltRandom,
                   roles: ['user'],
