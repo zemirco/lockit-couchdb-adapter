@@ -5,7 +5,7 @@ var ms = require('ms');
 var moment = require('moment');
 var Bluebird = require('bluebird');
 var init = require('./utils/create-views.js');
-
+var pwd = require('couch-pwd');
 
 
 /**
@@ -88,22 +88,49 @@ Adapter.prototype.save = function(name, email, pw, done) {
       var timespan = ms(that.config.signup.tokenExpiration);
       var future = moment().add(timespan, 'ms').toDate();
       // create a new user
-      var user = {
-        name: name,
-        password: pw,
-        email: email,
-        roles: ['user'],
-        type: 'user',
-        signupToken: uuid.v4(),
-        signupTimestamp: now,
-        signupTokenExpires: future,
-        failedLoginAttempts: 0
-      };
-      // add user to db
-      that._users.insert(user, 'org.couchdb.user:' + name, function(err, body) {
-        if (err) {return reject(err); }
-        resolve(body);
-      });
+      var user = {};
+      if (that.config.db.service == "cloudant"){
+
+          pwd.hash(pw, function(err, saltRandom, hash){
+              user = {
+                  name: name,
+                  password_scheme: 'pbkdf2',
+                  derived_key: hash,
+                  salt: saltRandom,
+                  roles: ['user'],
+                  type: 'user',
+                  signupToken: uuid.v4(),
+                  signupTimestamp: now,
+                  signupTokenExpires: future,
+                  failedLoginAttempts: 0
+              };
+            // add user to db
+            that._users.insert(user, 'org.couchdb.user:' + name, function(err, body) {
+              if (err) {return reject(err); }
+              resolve(body);
+            });
+          })
+
+      }else{
+          user = {
+              name: name,
+              password: pw,
+              email: email,
+              roles: ['user'],
+              type: 'user',
+              signupToken: uuid.v4(),
+              signupTimestamp: now,
+              signupTokenExpires: future,
+              failedLoginAttempts: 0
+          };
+          // add user to db
+          that._users.insert(user, 'org.couchdb.user:' + name, function(err, body) {
+            if (err) {return reject(err); }
+            resolve(body);
+          });
+      }
+
+
     });
   };
 
